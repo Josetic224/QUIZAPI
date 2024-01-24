@@ -20,7 +20,7 @@ router.post(
   registerUser
 );
 
-router.get("quizapp/user/verify/:id/:token", verifyUser);
+router.get("/verify/:id/:token", verifyUser);
 
 router.post("/quizapp/user/login", loginUser);
 router.post("/quizapp/user/logout", logout)
