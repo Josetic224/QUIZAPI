@@ -1,12 +1,13 @@
 const { check, validationResult } = require('express-validator');
-// const bcrypt = require('bcryptjs');
-// const jwt = require('jsonwebtoken');
 
 // Custom validator function for username
 const isUsernameValid = (value) => {
     const allowedCharacters = /^[a-zA-Z0-9_]+$/;
     return allowedCharacters.test(value);
 };
+
+// Password validation regex pattern
+const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 // Validation middleware for user registration
 const validateUserRegistration = [
@@ -23,10 +24,11 @@ const validateUserRegistration = [
         .notEmpty().withMessage('Email is required')
         .isEmail().withMessage('Invalid email address'),
 
-    // Validate password (add your own password validation rules here)
+    // Validate password with strict rules
     check('password')
         .trim()
-        .notEmpty().withMessage('Password is required'),
+        .notEmpty().withMessage('Password is required')
+        .matches(passwordRegex).withMessage('Password must be at least 8 characters long and include at least one letter, one digit, and one special character'),
 
     // Handle validation errors
     (req, res, next) => {
