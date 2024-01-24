@@ -8,6 +8,7 @@ const { registerUser } = require("../controller/signup");
 const { verifyUser } = require("../controller/sendEmail");
 const { loginUser } = require("../controller/login");
 const { logout } = require("../controller/logout");
+const { verifyToken } = require('../middleware/auth.js');
 
 
 
@@ -23,7 +24,7 @@ router.post(
 router.get("/verify/:id/:token", verifyUser);
 
 router.post("/quizapp/user/login", loginUser);
-router.post("/quizapp/user/logout", logout)
+router.get("/quizapp/user/logout/:id", verifyToken, logout)
 
 
 
