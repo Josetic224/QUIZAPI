@@ -6,8 +6,8 @@ const isUsernameValid = (value) => {
     return allowedCharacters.test(value);
 };
 
-// Password validation regex pattern
-const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+// Relaxed password validation regex pattern
+const passwordRegex = /^.{6,}$/;
 
 // Validation middleware for user registration
 const validateUserRegistration = [
@@ -24,11 +24,11 @@ const validateUserRegistration = [
         .notEmpty().withMessage('Email is required')
         .isEmail().withMessage('Invalid email address'),
 
-    // Validate password with strict rules
+    // Validate password with relaxed rules
     check('password')
         .trim()
         .notEmpty().withMessage('Password is required')
-        .matches(passwordRegex).withMessage('Password must be at least 8 characters long and include at least one letter, one digit, and one special character'),
+        .matches(passwordRegex).withMessage('Password must be at least 6 characters long'),
 
     // Handle validation errors
     (req, res, next) => {
