@@ -18,6 +18,6 @@ let mailOption={
     html:options.html
 }
 
-await transporter.sendMail(mailOption)
+await transporter.sendMail(mailOption);
 }
 module.exports = {sendEmail}
