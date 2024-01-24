@@ -2,16 +2,29 @@
 
 const {Quiz} = require('../model/quiz')
 require('dotenv').config()
-const createQuiz = async(req, res) => {
+const createQuiz = async (req, res) => {
     try {
+        // Ensure required fields are present in the request body
+        const requiredFields = ['question', 'options', 'correctOption'];
+        
+        for (const field of requiredFields) {
+            if (!req.body[field]) {
+                return res.status(400).json({ error: `${field} is required` });
+            }
+        }
+
+        // Assuming Quiz model is used
         const quiz = new Quiz(req.body);
         const quizSaved = await quiz.save();
+        
         res.status(200).json(quizSaved);
     } catch (error) {
-
-        res.status(403).json(error.message)
+        res.status(403).json(error.message);
     }
-}
+};
+
+
+
 
 const getQuizzes = async(req, res) => {
     try {
