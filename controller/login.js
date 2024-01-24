@@ -19,6 +19,9 @@ const loginUser = async (req, res) => {
         if (!user) {
             return res.status(400).json({ status: false, message: 'Email does not exist. Please sign up.' });
         }
+        if(!user.isVerified == true){
+            return res.status(403).send("Your account is not verified yet.")
+        }
 
         // Compare the provided password with the hashed password in the database
         const isPasswordValid = bcrypt.compareSync(password, user.password);
